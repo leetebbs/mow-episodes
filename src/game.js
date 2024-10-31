@@ -263,6 +263,20 @@ function update() {
       this.player.anims.play("idleDown", true);
     }
   }
+
+  // Keep player within screen boundaries
+  if (this.player.x < 10) {
+    this.player.x = 10; // Reset to left boundary
+  } else if (this.player.x > 790) {
+    this.player.x = 790; // Reset to right boundary
+  }
+
+  if (this.player.y < 10) {
+    this.player.y = 10; // Reset to top boundary
+  } else if (this.player.y > 590) {
+    this.player.y = 590; // Reset to bottom boundary
+  }
+
   this.slimes.children.iterate((slime) => {
     if (Phaser.Math.Between(0, 100) < 2) {
       const direction = Phaser.Math.Between(0, 3);
