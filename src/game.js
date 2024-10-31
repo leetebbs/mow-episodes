@@ -287,5 +287,18 @@ function update() {
           break;
       }
     }
+
+    // Keep slime within screen boundaries
+    if (slime.x < 10) {
+      slime.x = 10; // Reset to left boundary
+    } else if (slime.x > 790) {
+      slime.x = 790; // Reset to right boundary
+    }
+
+    if (slime.y < 10) {
+      slime.y = 10; // Reset to top boundary
+    } else if (slime.y > 590) {
+      slime.y = 590; // Reset to bottom boundary
+    }
   });
 }
