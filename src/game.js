@@ -21,7 +21,7 @@ const config = {
 const game = new Phaser.Game(config);
 
 function preload() {
-  this.load.spritesheet("player", "player.png", {
+  this.load.spritesheet("player", "player1.png", {
     frameWidth: 48,
     frameHeight: 48,
   });
@@ -209,6 +209,9 @@ function create() {
     const slime = this.slimes.create(x, y, "slime");
     slime.play("slimeIdleDown");
   }
+
+  // Add this line in the create function to enable spacebar input
+  this.cursors.space = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 }
 
 function update() {
@@ -275,6 +278,22 @@ function update() {
     this.player.y = 10; // Reset to top boundary
   } else if (this.player.y > 590) {
     this.player.y = 590; // Reset to bottom boundary
+  }
+
+  // Check for attack input
+  if (this.cursors.space.isDown) {
+    // Play attack animation based on the last direction
+    if (prevVelocity.x < 0) {
+      this.player.anims.play("attackRight", true);
+      this.player.flipX = true;
+    } else if (prevVelocity.x > 0) {
+      this.player.anims.play("attackRight", true);
+      this.player.flipX = false;
+    } else if (prevVelocity.y < 0) {
+      this.player.anims.play("attackUp", true);
+    } else if (prevVelocity.y > 0) {
+      this.player.anims.play("attackDown", true);
+    }
   }
 
   this.slimes.children.iterate((slime) => {
